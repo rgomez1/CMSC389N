@@ -5,6 +5,6 @@
 # User: dbuser
 # Password: goodbyeWorld
 # Database: cars
-(Manufacturer, Model, Year (unique)), Color, MPG
+(Manufacturer, Model, Year (unique)), MPG (City, Highway), Type
 
 # Table: information
