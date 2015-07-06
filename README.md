@@ -21,18 +21,24 @@ show databases;
 create database cars;
 use cars;
 show tables;
+
 create table information((manufacturer varchar(20), model varchar(20), year int (unique))
 	citympg int, highmpg int, type varchar(20), image blob, id varchar(10) primary key);
+
 grant all on cars.information to dbuser@localhost identified by "goodbyeWorld";
 
 insert into applicants values("Honda", "Civic", 1995, 39,
 	50, "hatchback", null, "10500");
+
 insert into applicants values("Daihatsu", "Charade", 1991, 32,
 	38, "supermini", null, "10_3cylman");
+
 insert into applicants values("Panoz", "Roadster", 1993, 13,
 	21, "sportscar", null, "10555");
+
 insert into applicants values("Volkswagen", "Cabrio", 1997, 19,
 	26, "convertible", null, "10566");
+
 insert into applicants values("Buick", "Park Avenue", 2001, 17,
 	27, "executive", null, "10577");
 
