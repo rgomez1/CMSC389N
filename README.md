@@ -4,6 +4,7 @@
 Username
 Email
 Password
+(We'll keep it simple for now).
 
 # Database Information:
  Host: localhost
