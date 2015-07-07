@@ -1,5 +1,10 @@
 # CMSC389N
 
+# Login Information (also put into database): We're putting a log in so we can have users sign up or sign in to access the information. This could also be a good use of forms (along with using forms for finding the cars that they want).
+Username
+Email
+Password
+
 # Database Information:
  Host: localhost
  User: dbuser
