@@ -3,8 +3,11 @@
 # Login Information (also put into database): We're putting a log in so we can have users sign up or sign in to access the information. This could also be a good use of forms (along with using forms for finding the cars that they want).
 Username
 Email
-Password
-(We'll keep it simple for now).
+Password (Verify password)
+(We'll keep it simple).
+
+# Login Database:
+What I'll be using: create table login (username varchar(20) primary key, email varchar(100), password varchar(50));
 
 # Database Information:
  Host: localhost
