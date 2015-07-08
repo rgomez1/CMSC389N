@@ -45,11 +45,7 @@
 			echo "<a href=\"main.php\" alt=\"Return\">Return to Main menu</a>";
 		} else {
 			echo "Username and password do not match, \n";
-<<<<<<< HEAD
 			echo "<a href=\"login.html\" alt=\"Log In\">click here try again</a>";
-=======
-			echo "<a href=\"login.html\" alt=\"Log in\">click here try again</a>";
->>>>>>> origin/master
 		}
 
 		mysqli_close($db);
