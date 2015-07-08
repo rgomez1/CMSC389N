@@ -5,7 +5,7 @@
 		<title>Cars</title>
 	</head>
 	<body>
-		<p class = "right"><a class="right" href="login.html" alt="Log in">Click Here to Log In </a></p>
+		<p class = "right"><a class="right" href="login.html" alt="Log in">Log In </a></p>
 		<center><h1>Information about Cars</h1></center>
 		<?php
 			$username = trim($_POST['username']);

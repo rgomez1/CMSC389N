@@ -39,10 +39,13 @@
 		}
 		
 		if ($exist) {
-			echo "You have successfully logged in!";
+			echo "You have successfully in logged! ";
+			session_start();
+			$_SESSION['username'] = $username;
+			echo "<a href=\"main.php\" alt=\"Return\">Return to Main menu</a>";
 		} else {
 			echo "Username and password do not match, \n";
-			echo "<a href=\"signup.html\" alt=\"Sign Up\">click here try again</a>";
+			echo "<a href=\"login.html\" alt=\"Log In\">click here try again</a>";
 		}
 
 		mysqli_close($db);

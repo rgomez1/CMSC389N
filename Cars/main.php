@@ -54,6 +54,21 @@
 				disconnectFromDB($db_connection);
     		}
     	?>
+
+		<p class = "right">
+		<?php
+			session_start();
+			if (isset($_SESSION['username']) && $_SESSION['username'] != "") {
+				echo "Welcome, ".$_SESSION['username']."! ";
+				echo "<a class=\"right\" href=\"logout.php\" alt=\"Log Out\">Log Out </a>";
+			} else {
+				echo "&nbsp;&nbsp;";
+				echo "<a class=\"right\" href=\"signup.html\" alt=\"Sign Up\">Sign Up</a>&nbsp;";
+				echo "<a class=\"right\" href=\"login.html\" alt=\"Log In\">Log In</a>";
+			}
+		?>
+		</p>
+
     	<header>
     		<h1>Find a Car</h1>
     		<hr>
