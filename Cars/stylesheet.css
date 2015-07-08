@@ -24,7 +24,7 @@ body {
 }
 
 #resultsList {
-    column-count: 3;
+    column-count: 6;
     column-gap: 1.75em;
 }
 

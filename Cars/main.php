@@ -1,83 +1,124 @@
+<?php
+	require_once("dbUtil.php");	
+?>
+
 <!doctype html>
 <html>
     <head> 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
         <title>Car Finder</title>
-        <link rel="stylesheet" href="main.css" type="text/css" /> 
+        <link rel="stylesheet" href="stylesheet.css" type="text/css" /> 
         <script src="main.js"></script>
     </head>
 
     <body>
+    	<?php
+    		if(isset($_GET["submit"])){
+    			$db_connection = connectToDB($host, $user, $password, $database);
+
+    			$query = sprintf("SELECT * FROM $table WHERE (
+		    				(category IN (%s)) AND
+		    				(size     IN (%s)) AND
+		    				(msrp     <=  %s ) AND
+		    				(mpg      >=  %s ) AND
+		    				(stars    >=  %s ) AND
+		    				(fuel     IN (%s))     )
+		    			ORDER BY %s",
+    				implode(", ", $_GET["categories"]), 
+    				implode(", ", $_GET["sizes"]), 
+    				$_GET["msrp"], 
+    				$_GET["mpg"], 
+    				$_GET["stars"], 
+    				implode(", ", $_GET["fuel"]),
+    				$_GET["sortBy"]);
+
+				$result = $db_connection->query($query);
+
+				if ($result) {
+					$numberOfRows = mysqli_num_rows($result);
+					while ($recordArray = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+				     	$year = $recordArray['year'];
+						$manufacturer = $recordArray['manufacturer'];
+						$model = $recordArray['model'];
+						$image = $recordArray['image'];
+						//TODO
+		     		}
+					mysqli_free_result($result);
+				}
+
+				disconnectFromDB($db_connection);
+    		}
+    	?>
     	<header>
     		<h1>Find a Car</h1>
     		<hr>
 		</header>
 	    <div id="content">
 	        <div id="sidebar">
-		        <form>
+		        <form action="main.php" id="form1">
 					<p>			
 						<strong>Category: </strong><br />
-						<select id ="categories" multiple="multiple">
-							<option id="Convertible">Convertible</option>
-							<option id="Coupe">Coupe</option>
-							<option id="Sedan">Sedan</option>
-							<option id="Hatchback">Hatchback / Wagon</option>
-							<option id="SUV">SUV</option>
-							<option id="Pickup Truck">Pickup Truck</option>
-							<option id="Van">Van</option>
+						<select name ="categories[]" multiple="multiple">
+							<option value="Convertible">Convertible</option>
+							<option value="Coupe">Coupe</option>
+							<option value="Sedan" selected="selected">Sedan</option>
+							<option value="Hatchback">Hatchback / Wagon</option>
+							<option value="SUV">SUV</option>
+							<option value="Pickup Truck">Pickup Truck</option>
+							<option value="Van">Van</option>
 						</select>	
 					</p>
 					<p>			
 						<strong>Size: </strong><br />
-						<select id ="sizes" multiple="multiple">
-							<option id="Compact">Compact</option>
-							<option id="Midsize">Midsize</option>
-							<option id="Fullsize">Fullsize</option>
+						<select name ="sizes[]" multiple="multiple">
+							<option value="Compact">Compact</option>
+							<option value="Midsize" selected="selected">Midsize</option>
+							<option value="Fullsize">Fullsize</option>
 						</select>	
 					</p>
 					<p>			
 						<strong>Maximum MSRP: </strong>
-						<output id="MSRPout" for="msrp">$0</output><br />
-						<input class="range" type="range" id="msrp" min="0" max="200000" value="0" oninput="updateMSRPout()">	
+						<output id="MSRPout" for="msrp">$200000</output><br />
+						<input class="range" type="range" id="msrp" name="msrp" min="0" max="200000" value="200000" oninput="updateMSRPout()">	
 					</p>
 					<p>			
 						<strong>Minimum MPG: </strong>
 						<output id="MPGout" for="mpg">0 MPG</output><br />
-						<input class="range" type="range" id="mpg" min="0" max="50" value="0" oninput="updateMPGout()">	
+						<input class="range" type="range" id="mpg" name="mpg" min="0" max="50" value="0" oninput="updateMPGout()">	
 					</p>
 					<p>			
 						<strong>Minimum Safety Rating: </strong><br />
 						<span class="rating">
 						    <input type="radio" class="rating-input"
-						        id="rating-input-1-5" name="rating-input-1">
+						        id="rating-input-1-5" name="stars" value="5">
 						    <label for="rating-input-1-5" class="rating-star"></label>
 						    <input type="radio" class="rating-input"
-						        id="rating-input-1-4" name="rating-input-1">
+						        id="rating-input-1-4" name="stars" value="4">
 						    <label for="rating-input-1-4" class="rating-star"></label>
 						    <input type="radio" class="rating-input"
-						        id="rating-input-1-3" name="rating-input-1">
+						        id="rating-input-1-3" name="stars" value="3" checked="checked">
 						    <label for="rating-input-1-3" class="rating-star"></label>
 						    <input type="radio" class="rating-input"
-						        id="rating-input-1-2" name="rating-input-1">
+						        id="rating-input-1-2" name="stars" value="2">
 						    <label for="rating-input-1-2" class="rating-star"></label>
 						    <input type="radio" class="rating-input"
-						        id="rating-input-1-1" name="rating-input-1">
+						        id="rating-input-1-1" name="stars" value="1">
 						    <label for="rating-input-1-1" class="rating-star"></label>
 						</span>		
 					</p>
 					<p>
 						<strong>Fuel: </strong><br />
-						<select id ="fuel">
-							<option id="gas">Gas</option>
-							<option id="diesel">Diesel</option>
-							<option id="hybrid">Hybrid</option>
-							<option id="electric">Electric</option>
+						<select name ="fuel[]">
+							<option value="gas" selected="selected">Gas</option>
+							<option value="diesel">Diesel</option>
+							<option value="hybrid">Hybrid</option>
+							<option value="electric">Electric</option>
 						</select>
 					</p>
 					<br><br>
 					<p>
 						<input type="reset" value="Reset Filters"/>
-						<input type="submit" value="Filter Results"/>
+						<input type="submit" name="submit" value="Filter Results"/>
 					</p>
 				</form>
 	        </div>
@@ -85,12 +126,12 @@
 	            <div id="sortByDiv">
 	            	<br>
             		<strong>Sort by: </strong>
-					<select id="sortBy">
-						<option id="Lowest Price">Lowest Price</option>
-						<option id="Highest Price">Highest Price</option>
-						<option id="Newest">Newest</option>
-						<option id="Oldest">Oldest</option>
-						<option id="Safest">Safest</option>
+					<select id="sortBy" form="form1" name ="sortBy">
+						<option id="Lowest Price" value="msrp ASC">Lowest Price</option>
+						<option id="Highest Price" value="msrp DESC">Highest Price</option>
+						<option id="Newest" value="year DESC">Newest</option>
+						<option id="Oldest" value="year ASC">Oldest</option>
+						<option id="Safest" value="stars DESC">Safest</option>
 					</select>
 					<br>
 	        	</div>
@@ -101,8 +142,5 @@
 	        	</div>
 	        </div>
 	    </div>
-	    <footer>
-	        <!-- Maybe a link to an about page -->
-	    </footer>
     </body>
 </html>

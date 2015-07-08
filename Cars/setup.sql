@@ -1,6 +1,6 @@
-CREATE DATABASE Cars;
+CREATE DATABASE cars;
 
-CREATE TABLE Cars.specifications (
+CREATE TABLE cars.specifications (
 	year INT,
 	manufacturer VARCHAR(50),
 	model VARCHAR(50) PRIMARY KEY,
@@ -14,4 +14,4 @@ CREATE TABLE Cars.specifications (
 );
 
 INSERT INTO Cars.specifications
-VALUES ('2015', 'Ford', 'F-150', 'Pickup Truck', 'Fullsize', '30000', '20', '5', 'Gas', LOAD_FILE('images/1.png'));
+VALUES ('2015', 'Ford', 'F-150', 'Pickup Truck', 'Fullsize', '30000', '20', '5', 'Gas', "C:\xampp\htdocs\projects\group\images");
