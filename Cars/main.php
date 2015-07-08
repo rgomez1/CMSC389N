@@ -32,9 +32,6 @@
     				implode(", ", $_GET["fuel"]),
     				$_GET["sortBy"]);
 
-				//$query = "SELECT * FROM specifications WHERE ( (msrp <= 200000 ) AND (mpg >= 0 ) AND (stars >= 1 ) ) ORDER BY msrp ASC;";
-
-				echo $query;
 				$result = $db_connection->query($query);
 
 				if ($result) {
@@ -44,9 +41,12 @@
 						$manufacturer = $recordArray['manufacturer'];
 						$model = $recordArray['model'];
 						$image = $recordArray['image'];
+
+						//echo $year, $manufacturer, $model;
+						//echo '<img src="data:image/jpeg;base64,'.base64_encode($image);' />';
+												
 						//TODO
-						echo $year, $manufacturer, $model;
-						echo '<img src="data:image/jpeg;base64,'.base64_encode( $image ).'"/>';
+
 		     		}
 					mysqli_free_result($result);
 				}
@@ -79,21 +79,21 @@
 					<p>			
 						<strong>Category: </strong><br />
 						<select name ="categories[]" multiple="multiple">
-							<option value="convertible">Convertible</option>
-							<option value="coupe">Coupe</option>
-							<option value="sedan" selected="selected">Sedan</option>
-							<option value="hatchback">Hatchback / Wagon</option>
-							<option value="suv">SUV</option>
-							<option value="pickup">Pickup Truck</option>
-							<option value="van">Van</option>
+							<option value="'convertible'">Convertible</option>
+							<option value="'coupe'">Coupe</option>
+							<option value="'sedan'" selected="selected">Sedan</option>
+							<option value="'hatchback'">Hatchback / Wagon</option>
+							<option value="'suv'">SUV</option>
+							<option value="'pickup'">Pickup Truck</option>
+							<option value="'van'">Van</option>
 						</select>	
 					</p>
 					<p>			
 						<strong>Size: </strong><br />
 						<select name ="sizes[]" multiple="multiple">
-							<option value="compact">Compact</option>
-							<option value="midsize" selected="selected">Midsize</option>
-							<option value="fullsize">Fullsize</option>
+							<option value="'compact'">Compact</option>
+							<option value="'midsize'" selected="selected">Midsize</option>
+							<option value="'fullsize'">Fullsize</option>
 						</select>	
 					</p>
 					<p>			
@@ -128,11 +128,11 @@
 					</p>
 					<p>
 						<strong>Fuel: </strong><br />
-						<select name ="fuel[]">
-							<option value="gas" selected="selected">Gas</option>
-							<option value="diesel">Diesel</option>
-							<option value="hybrid">Hybrid</option>
-							<option value="electric">Electric</option>
+						<select name ="fuel[]" multiple="multiple">
+							<option value="'gas'" selected="selected">Gas</option>
+							<option value="'diesel'">Diesel</option>
+							<option value="'hybrid'">Hybrid</option>
+							<option value="'electric'">Electric</option>
 						</select>
 					</p>
 					<br><br>
