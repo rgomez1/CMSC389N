@@ -42,7 +42,7 @@
 			echo "You have successfully logged in!";
 		} else {
 			echo "Username and password do not match, \n";
-			echo "<a href=\"signup.html\" alt=\"Sign Up\">click here try again</a>";
+			echo "<a href=\"login.html\" alt=\"Log in\">click here try again</a>";
 		}
 
 		mysqli_close($db);
