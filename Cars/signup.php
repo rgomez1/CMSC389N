@@ -8,13 +8,13 @@
 		<p class = "right"><a class="right" href="login.html" alt="wow">Click Here to Log In </a></p>
 		<center><h1>Information about Cars</h1></center>
 		<?php
-			$name = trim($_POST['name']);
+			$username = trim($_POST['username']);
 			$email = trim($_POST['email']);
 			$pass = crypt(trim($_POST['password']), "abc");
 			$verify = crypt(trim($_POST['verify']), "abc");
 
 			if ($pass !== $verify) {
-				header("Location: invalid.html");
+				echo "Passwords do not match!";
 			} else {
 				$host = "localhost";
 				$user = "dbuser";
@@ -23,15 +23,37 @@
 				$table = "login";
 
 				$db = connectToDB($host, $user, $dbpassword, $database);
-				$sqlQuery = sprintf("insert into $table (username, email, password) values ('%s', '%s', '%s')", $name, $email, $pass);
-				$result = mysqli_query($db, $sqlQuery);
-				if (!$result) {
-					echo "Inserting records failed.".mysqli_error($db);
-					echo "You have succesfully signed up!";
+				if (checkUsernameExist($db, $table, $username)) {
+					echo "<script>alert(\"Username already exists in the database </script>\")";
+				} else {
+					$sqlQuery = sprintf("insert into $table (username, email, password) values ('%s', '%s', '%s')", $username, $email, $pass);
+					$result = mysqli_query($db, $sqlQuery);
+					if (!$result) {
+						echo "Inserting records failed.".mysqli_error($db);
+					} else {
+						echo "You have successfully signed up!";
+					}
+
+					mysqli_close($db);
 				}
 			}
 
-			mysqli_close($db);
+			function checkUsernameExist($db, $table, $username) {
+				$sqlQuery = sprintf("select * from %s where username=\"%s\"", $table, $username);
+				$result = mysqli_query($db, $sqlQuery);
+
+				if ($result) {
+					$numberOfRows = mysqli_num_rows($result);
+			 	 	if ($numberOfRows == 0) {
+						return false;
+					} else {
+						return true;
+					}
+				}  else {
+					echo "Retrieving records failed.".mysqli_error($db);
+				}
+				return true;				//Doesn't try to put into database.
+			}
 
 			function connectToDB($host, $user, $password, $database) {
 				$db = mysqli_connect($host, $user, $password, $database);
