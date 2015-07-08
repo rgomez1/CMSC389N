@@ -1,11 +1,11 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		<link rel="stylesheet" type="text/cs"s href="stylesheet.css"> 
+		<link rel="stylesheet" type="text/css" href="stylesheet.css"> 
 		<title>Cars</title>
 	</head>
 	<body>
-		<p class = "right"><a class="right" href="login.html" alt="wow">Click Here to Log In </a></p>
+		<p class = "right"><a class="right" href="login.html" alt="Log in">Click Here to Log In </a></p>
 		<center><h1>Information about Cars</h1></center>
 		<?php
 			$username = trim($_POST['username']);
@@ -14,7 +14,8 @@
 			$verify = crypt(trim($_POST['verify']), "abc");
 
 			if ($pass !== $verify) {
-				echo "Passwords do not match!";
+				echo "Passwords do not match, ";
+				echo "<a href=\"signup.html\" alt=\"Sign Up\">click here try again</a>";
 			} else {
 				$host = "localhost";
 				$user = "dbuser";
@@ -24,7 +25,8 @@
 
 				$db = connectToDB($host, $user, $dbpassword, $database);
 				if (checkUsernameExist($db, $table, $username)) {
-					echo "<script>alert(\"Username already exists in the database </script>\")";
+					echo "Username already exists in the database, ";
+					echo "<a href=\"signup.html\" alt=\"Sign Up\">click here try again</a>";
 				} else {
 					$sqlQuery = sprintf("insert into $table (username, email, password) values ('%s', '%s', '%s')", $username, $email, $pass);
 					$result = mysqli_query($db, $sqlQuery);
