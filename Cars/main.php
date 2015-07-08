@@ -3,11 +3,26 @@
     <head> 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
         <title>Car Finder</title>
-        <link rel="stylesheet" href="main.css" type="text/css" /> 
+        <link rel="stylesheet" href="stylesheet.css" type="text/css" /> 
         <script src="main.js"></script>
     </head>
 
     <body>
+
+		<p class = "right">
+		<?php
+			session_start();
+			if (isset($_SESSION['username']) && $_SESSION['username'] != "") {
+				echo "Welcome, ".$_SESSION['username']."! ";
+				echo "<a class=\"right\" href=\"logout.php\" alt=\"Log Out\">Log Out </a>";
+			} else {
+				echo "&nbsp;&nbsp;";
+				echo "<a class=\"right\" href=\"signup.html\" alt=\"Sign Up\">Sign Up</a>&nbsp;";
+				echo "<a class=\"right\" href=\"login.html\" alt=\"Log In\">Log In</a>";
+			}
+		?>
+		</p>
+
     	<header>
     		<h1>Find a Car</h1>
     		<hr>
