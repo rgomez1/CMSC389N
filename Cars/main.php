@@ -23,7 +23,7 @@
 		    				(mpg      >=  %s ) AND
 		    				(stars    >=  %s ) AND
 		    				(fuel     IN (%s))     )
-		    			ORDER BY %s",
+		    			ORDER BY %s;",
     				implode(", ", $_GET["categories"]), 
     				implode(", ", $_GET["sizes"]), 
     				$_GET["msrp"], 
@@ -32,6 +32,9 @@
     				implode(", ", $_GET["fuel"]),
     				$_GET["sortBy"]);
 
+				//$query = "SELECT * FROM specifications WHERE ( (msrp <= 200000 ) AND (mpg >= 0 ) AND (stars >= 1 ) ) ORDER BY msrp ASC;";
+
+				echo $query;
 				$result = $db_connection->query($query);
 
 				if ($result) {
@@ -42,6 +45,8 @@
 						$model = $recordArray['model'];
 						$image = $recordArray['image'];
 						//TODO
+						echo $year, $manufacturer, $model;
+						echo '<img src="data:image/jpeg;base64,'.base64_encode( $image ).'"/>';
 		     		}
 					mysqli_free_result($result);
 				}
@@ -59,21 +64,21 @@
 					<p>			
 						<strong>Category: </strong><br />
 						<select name ="categories[]" multiple="multiple">
-							<option value="Convertible">Convertible</option>
-							<option value="Coupe">Coupe</option>
-							<option value="Sedan" selected="selected">Sedan</option>
-							<option value="Hatchback">Hatchback / Wagon</option>
-							<option value="SUV">SUV</option>
-							<option value="Pickup Truck">Pickup Truck</option>
-							<option value="Van">Van</option>
+							<option value="convertible">Convertible</option>
+							<option value="coupe">Coupe</option>
+							<option value="sedan" selected="selected">Sedan</option>
+							<option value="hatchback">Hatchback / Wagon</option>
+							<option value="suv">SUV</option>
+							<option value="pickup">Pickup Truck</option>
+							<option value="van">Van</option>
 						</select>	
 					</p>
 					<p>			
 						<strong>Size: </strong><br />
 						<select name ="sizes[]" multiple="multiple">
-							<option value="Compact">Compact</option>
-							<option value="Midsize" selected="selected">Midsize</option>
-							<option value="Fullsize">Fullsize</option>
+							<option value="compact">Compact</option>
+							<option value="midsize" selected="selected">Midsize</option>
+							<option value="fullsize">Fullsize</option>
 						</select>	
 					</p>
 					<p>			
